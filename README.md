@@ -1,16 +1,51 @@
-# React + Vite
+# Dojo Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+App PWA para dojos y estudios marciales. Permite registrar alumnos, controlar su saldo de clases y consultar el historial de movimientos — todo desde el celular, sin conexión a internet.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Alumnos
+- Agregar, editar y archivar alumnos
+- Ver lista de alumnos activos y archivados
+- Desarchivar alumnos sin perder su historial
 
-## React Compiler
+### Balance de clases
+- Registrar asistencia (−1 clase)
+- Registrar pagos (+1 o +10 clases)
+- El sistema impide que el saldo quede negativo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Historial
+- Ver todos los movimientos de un alumno (desde su perfil)
+- Consultar el historial general filtrando por rango de fechas
+- Cada movimiento registra fecha, tipo, saldo anterior y saldo nuevo
 
-## Expanding the ESLint configuration
+### Backup
+- Exportar todos los datos a un archivo JSON desde el menú de la app
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Stack
+
+- **React 19** + Vite
+- **Dexie** (IndexedDB) — base de datos local en el navegador
+- **Tailwind CSS 4**
+- **PWA** — instalable en iOS/Android, funciona sin conexión
+
+## Desarrollo
+
+```bash
+npm install
+npm run dev      # servidor de desarrollo
+npm test         # correr tests (Vitest + fake-indexeddb)
+npm run build    # build de producción
+```
+
+## Tests
+
+Los tests corren contra una instancia real de Dexie en memoria usando `fake-indexeddb`. No hay mocks — cada test verifica comportamiento real a través de la interfaz pública de `src/db.js`.
+
+```bash
+npm test
+```
+
+## Despliegue
+
+La app se despliega automáticamente en GitHub Pages al hacer push a `main`.
