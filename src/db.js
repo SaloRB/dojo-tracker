@@ -69,10 +69,8 @@ export async function getStudentHistory(studentId) {
 }
 
 export async function getHistoryByDateRange(startDate, endDate) {
-  const start = new Date(startDate).toISOString()
-  const end = new Date(endDate)
-  end.setUTCHours(23, 59, 59, 999)
-  const endIso = end.toISOString()
+  const start = new Date(startDate + 'T00:00:00').toISOString()
+  const endIso = new Date(endDate + 'T23:59:59.999').toISOString()
 
   const movements = await db.movements
     .where('date')
