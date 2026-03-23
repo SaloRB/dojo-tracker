@@ -1,12 +1,9 @@
 const CACHE_NAME = 'dojo-tracker-v1'
-const ASSETS = [
-  '/',
-  '/index.html',
-]
 
 self.addEventListener('install', (event) => {
+  const base = self.registration.scope
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then((cache) => cache.addAll([base, base + 'index.html']))
   )
   self.skipWaiting()
 })
@@ -30,7 +27,7 @@ self.addEventListener('fetch', (event) => {
         const clone = response.clone()
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone))
         return response
-      }).catch(() => caches.match('/'))
+      }).catch(() => caches.match(self.registration.scope))
     })
   )
 })
